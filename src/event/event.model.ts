@@ -15,7 +15,12 @@ const eventSchema = new Schema({
     required: true,
   },
   attendees: {
-    type: [String],
+    type: [
+      {
+        serialNumber: String,
+        present: { type: Boolean, default: false },
+      },
+    ],
     default: [],
   },
 });
