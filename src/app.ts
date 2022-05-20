@@ -6,14 +6,16 @@ import {
   DATABASE_URL,
   DATABASE_NAME,
 } from "./config/app.config";
+import Controller from "./interfaces/controller.interface";
 
 export default class App {
   app: Express = express();
 
-  constructor() {
+  constructor(controllers: Controller[]) {
     this.useMiddlewares();
     this.connectToDatabase();
     this.initHomeRoute();
+    this.initilizeControllers(controllers);
 
     //Listen
     this.app.listen(PORT, () => {
@@ -30,6 +32,12 @@ export default class App {
   private useMiddlewares() {
     this.app.use(cors());
     this.app.use(express.json());
+  }
+
+  private initilizeControllers(controllers: Controller[]) {
+    controllers.forEach((controller) => {
+      this.app.use(controller.path, controller.router);
+    });
   }
 
   private connectToDatabase() {
