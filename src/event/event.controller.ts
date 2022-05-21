@@ -17,13 +17,8 @@ export default class Event implements Controller {
   }
 
   private async createEvent(req: Request, res: Response) {
-    const { name, username, password } = req.body;
     try {
-      const event = await EventModel.create({
-        name,
-        username,
-        password,
-      });
+      const event = await EventModel.create(req.body);
       res.status(201).send(event);
     } catch (error) {
       res.status(401).send(error);

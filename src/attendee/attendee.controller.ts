@@ -6,21 +6,25 @@ export default class Attendee implements Controller {
   path = "/attendee";
   router = Router();
 
-  constructor() {}
+  constructor() {
+    this.initilizeRoutes();
+  }
 
   private initilizeRoutes() {
     this.router.post("/create", this.createAttendee);
+    this.router.get(
+      "/serialNumber/:serialNumber",
+      this.getAttendeeBySerialNumber,
+    );
+    this.router.get(
+      "/phoneNumber/:phoneNumber",
+      this.getAttendeeByPhoneNumber,
+    );
   }
 
-  private async createAttendee(res: Response, req: Request) {
-    const { name, email, phoneNumber, serialNumber } = req.body;
+  private async createAttendee(req: Request, res: Response) {
     try {
-      const attendee = await AttendeeModel.create({
-        name,
-        email,
-        phoneNumber,
-        serialNumber,
-      });
+      const attendee = await AttendeeModel.create(req.body);
       res.status(201).send(attendee);
     } catch (error) {
       res.status(401).send(error);
@@ -28,10 +32,10 @@ export default class Attendee implements Controller {
   }
 
   private async getAttendeeBySerialNumber(
-    res: Response,
     req: Request,
+    res: Response,
   ) {
-    const { serialNumber } = req.params;
+    const serialNumber = req.params.serialNumber;
     try {
       const attendee = await AttendeeModel.findOne({ serialNumber });
       if (attendee) {
@@ -45,10 +49,10 @@ export default class Attendee implements Controller {
   }
 
   private async getAttendeeByPhoneNumber(
-    res: Response,
     req: Request,
+    res: Response,
   ) {
-    const { phoneNumber } = req.params;
+    const phoneNumber = req.params.phoneNumber;
     try {
       const attendee = await AttendeeModel.findOne({ phoneNumber });
       if (attendee) {
