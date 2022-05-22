@@ -1,3 +1,10 @@
+const mongo_url = "https://technica-hack.herokuapp.com/";
+
+const footer = `<footer>
+		<img id="footer-home" src="./resources/home.svg" />
+		<img id="footer-faq" src="./resources/faq.svg" />
+	</footer>`;
+
 const tap_to_scan = {
 	head: `
     <link rel="stylesheet" href="./common/footer/footer.css" />
@@ -14,10 +21,7 @@ const tap_to_scan = {
 			<img src="./resources/ScanCard.svg" id="navbar-text" />
 		</navbar>
 		<img id="tap-to-scan-image" src="./resources/tapToScan.svg" />
-		<footer>
-			<img id="footer-home" src="./resources/home.svg" />
-			<img id="footer-faq" src="./resources/home.svg" />
-		</footer>
+		${footer}
   `,
 };
 
@@ -33,10 +37,7 @@ const scanning_in_progress = {
 			/>
 			<h1 id="scanning-in-progress-text">Scanning</h1>
 		</div>
-		<footer>
-			<img id="footer-home" src="./resources/home.svg" />
-			<img id="footer-faq" src="./resources/home.svg" />
-		</footer>
+		${footer}
 
 		<script src="./scanning-in-progress/font.js"></script>
   `,
@@ -82,35 +83,32 @@ const add_member = {
 
 	body: `
     <navbar style="background-color: white">
-			<img src="../resources/leftarrow.svg" id="navbar-back" />
+			<img src="./resources/leftarrow.svg" id="navbar-back" />
 		</navbar>
 		<img
 			id="randomPhoto"
-			src="../resources/someRandomPhotoDetailsPage.svg"
+			src="./resources/someRandomPhotoDetailsPage.svg"
 		/>
 		<form id="member-form">
 			<div class="form-field-container">
 				<p class="form-field-lable">Serial Number</p>
-				<input type="text" class="form-field-input" id="serialNumber"/>
+				<input type="disabled" class="form-field-input" id="serialNumber"/>
 			</div>
 			<div class="form-field-container">
 				<p class="form-field-lable">Name</p>
-				<input type="text" class="form-field-input" />
+				<input type="text" class="form-field-input" id="name"/>
 			</div>
 			<div class="form-field-container">
 				<p class="form-field-lable">Phone Number</p>
-				<input type="text" class="form-field-input" />
+				<input type="text" class="form-field-input" id="phoneNumber"/>
 			</div>
 			<div class="form-field-container">
 				<p class="form-field-lable">Email</p>
-				<input type="text" class="form-field-input" />
+				<input type="text" class="form-field-input" id="email"/>
 			</div>
 		</form>
 		<button id="form-next-button">Next</button>
-		<footer>
-			<img id="footer-home" src="../resources/home.svg" />
-			<img id="footer-faq" src="../resources/home.svg" />
-		</footer>
+		${footer}
   `,
 };
 
@@ -139,6 +137,11 @@ const set_scanning_in_progress = async () => {
 		setFontSize();
 	});
 
+	if (!("NDEFReader" in window)) {
+		set_add_member("Nfc not supported");
+		return;
+	}
+
 	var i = 0;
 
 	const scanning_animation = setInterval(() => {
@@ -154,10 +157,6 @@ const set_scanning_in_progress = async () => {
 		set_tap_to_scan();
 	});
 
-	if (!("NDEFReader" in window)) {
-		document.body.innerHTML = "No support for NFC!";
-	}
-
 	const ndef = new NDEFReader();
 	await ndef.scan();
 
@@ -166,11 +165,49 @@ const set_scanning_in_progress = async () => {
 	});
 };
 
+const create_member = async () => {
+	const serialNumber = document.getElementById("serialNumber").value;
+	const name = document.getElementById("name").value;
+	const phoneNumber = document.getElementById("phoneNumber").value;
+	const email = document.getElementById("email").value;
+
+	const responst = await fetch(`${mongo_url}/attendee/create`, {
+		method: "POST",
+
+		body: JSON.stringify({
+			serialNumber,
+			name,
+			phoneNumber,
+			email,
+		}),
+
+		headers: {
+			"Content-type": "application/json; charset=UTF-8",
+		},
+	});
+
+	set_tap_to_scan();
+};
+
 const set_add_member = (serialNumber) => {
 	document.body.innerHTML = add_member.body;
 	document.head.innerHTML = add_member.head;
 
 	document.getElementById("serialNumber").value = serialNumber;
+
+	const response = await fetch(`${mongo_url}/attendee/serialNumber/${serialNumber}`)
+	if (response.status == 200) {
+		
+		data = await response.json()
+		document.getElementById("name").value = response.name;
+		document.getElementById("phoneNumber").value = response.phoneNumber;
+		document.getElementById("email").value = response.email;
+
+
+	}
+	
+
+	document.getElementById("form-next-button").onclick = create_member;
 };
 
 set_tap_to_scan();
