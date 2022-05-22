@@ -199,10 +199,10 @@ const set_add_member = async (serialNumber) => {
 		`${mongo_url}/attendee/serialNumber/${serialNumber}`
 	);
 	if (response.status == 200) {
-		data = await response.json();
-		document.getElementById("name").value = response.name;
-		document.getElementById("phoneNumber").value = response.phoneNumber;
-		document.getElementById("email").value = response.email;
+		const data = await response.json();
+		document.getElementById("name").value = data.name;
+		document.getElementById("phoneNumber").value = data.phoneNumber;
+		document.getElementById("email").value = data.email;
 	}
 
 	document.getElementById("form-next-button").onclick = create_member;
