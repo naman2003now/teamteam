@@ -1,6 +1,6 @@
 const tap_to_scan = {
 	head: `
-    <link rel="stylesheet" href="../common/footer/footer.css" />
+    <link rel="stylesheet" href="./common/footer/footer.css" />
 		<link
 			rel="stylesheet"
 			href="./common/mobile-navbar/mobile-navbar.css"
@@ -13,7 +13,7 @@ const tap_to_scan = {
 			<img src="./resources/leftarrow.svg" id="navbar-back" />
 			<img src="./resources/ScanCard.svg" id="navbar-text" />
 		</navbar>
-		<img id="tap-to-scan-image" src="../resources/tapToScan.svg" />
+		<img id="tap-to-scan-image" src="./resources/tapToScan.svg" />
 		<footer>
 			<img id="footer-home" src="./resources/home.svg" />
 			<img id="footer-faq" src="./resources/home.svg" />
@@ -57,7 +57,7 @@ const scanning_in_progress = {
 
 		<link
 			rel="stylesheet"
-			href="../common/mobile-navbar/mobile-navbar.css"
+			href="./common/mobile-navbar/mobile-navbar.css"
 		/>
     `,
 };
