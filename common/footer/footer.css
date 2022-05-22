@@ -1,0 +1,41 @@
+* {
+	--theme-orange: #f96e11;
+}
+
+footer {
+	display: block;
+
+	position: absolute;
+	bottom: 3%;
+	left: 10%;
+
+	width: 80%;
+	height: 3%;
+
+	border-radius: 2vmin;
+
+	background-color: var(--theme-orange);
+	padding: 20px;
+}
+
+#footer-home {
+	position: absolute;
+	top: 50%;
+	transform: translatey(-50%);
+	left: 6.5%;
+	height: 50%;
+}
+
+#footer-faq {
+	position: absolute;
+	top: 50%;
+	transform: translatey(-50%);
+	right: 7.5%;
+	height: 50%;
+}
+
+@media (min-aspect-ratio: 2/3) {
+	footer {
+		display: none;
+	}
+}

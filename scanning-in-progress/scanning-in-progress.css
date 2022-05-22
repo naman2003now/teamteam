@@ -1,0 +1,19 @@
+#scanning-in-progress {
+	position: absolute;
+
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	width: 50%;
+}
+
+#scanning-in-progress-image {
+	width: 100%;
+}
+
+#scanning-in-progress-text {
+	font-family: "Montserrat", sans-serif;
+	width: 100%;
+	color: #f96e11;
+}
