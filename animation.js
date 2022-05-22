@@ -1,4 +1,4 @@
-const mongo_url = "https://technica-hack.herokuapp.com/";
+const mongo_url = "https://technica-hack.herokuapp.com";
 
 const footer = `<footer>
 		<img id="footer-home" src="./resources/home.svg" />
@@ -189,23 +189,21 @@ const create_member = async () => {
 	set_tap_to_scan();
 };
 
-const set_add_member = (serialNumber) => {
+const set_add_member = async (serialNumber) => {
 	document.body.innerHTML = add_member.body;
 	document.head.innerHTML = add_member.head;
 
 	document.getElementById("serialNumber").value = serialNumber;
 
-	const response = await fetch(`${mongo_url}/attendee/serialNumber/${serialNumber}`)
+	const response = await fetch(
+		`${mongo_url}/attendee/serialNumber/${serialNumber}`
+	);
 	if (response.status == 200) {
-		
-		data = await response.json()
+		data = await response.json();
 		document.getElementById("name").value = response.name;
 		document.getElementById("phoneNumber").value = response.phoneNumber;
 		document.getElementById("email").value = response.email;
-
-
 	}
-	
 
 	document.getElementById("form-next-button").onclick = create_member;
 };
