@@ -130,6 +130,22 @@ const registrationSuccessful = {
 ${footer}`,
 };
 
+const nfcNotSupported = {
+	head: `		<title>Document</title>
+		<link rel="stylesheet" href="./common/footer/footer.css" />
+		<link
+			rel="stylesheet"
+			href="./common/mobile-navbar/mobile-navbar.css"
+		/>
+
+		<link rel="stylesheet" href="./registration/registration.css" />`,
+
+	body: `		<navbar style="background-color: white">
+			<img src="../resources/leftarrow.svg" id="navbar-back" />
+		</navbar>
+		<img id="randomPhoto" src="./resources/nfcNotSupported.svg" />
+${footer}`,
+};
 const set_tap_to_scan = async () => {
 	document.head.innerHTML = tap_to_scan.head;
 	document.body.innerHTML = tap_to_scan.body;
@@ -139,6 +155,11 @@ const set_tap_to_scan = async () => {
 		.addEventListener("click", () => {
 			set_scanning_in_progress();
 		});
+};
+
+const set_nfc_not_supported = async () => {
+	document.head.innerHTML = nfcNotSupported.head;
+	document.body.innerHTML = nfcNotSupported.body;
 };
 
 const set_scanning_in_progress = async () => {
@@ -156,7 +177,11 @@ const set_scanning_in_progress = async () => {
 	});
 
 	if (!("NDEFReader" in window)) {
-		set_add_member("Nfc not supported");
+		set_nfc_not_supported();
+
+		document.getElementById("navbar-back").addEventListener("click", () => {
+			set_tap_to_scan();
+		});
 		return;
 	}
 
