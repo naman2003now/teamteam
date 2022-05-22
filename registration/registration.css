@@ -1,0 +1,35 @@
+body {
+	height: 100vh;
+}
+
+#randomPhoto {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 85%;
+}
+
+#form-next-button {
+	font-family: "Montserrat", sans-serif;
+
+	position: absolute;
+	border: none;
+	bottom: 20%;
+	left: 50%;
+	transform: translatex(-50%);
+	height: 5%;
+	width: 25%;
+	border-radius: 2vw;
+	background-color: #f96e11;
+
+	color: white;
+
+	font-size: 30px;
+}
+
+@media (min-aspect-ratio: 2/3) {
+	#form-next-button {
+		display: none;
+	}
+}

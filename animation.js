@@ -112,6 +112,24 @@ const add_member = {
   `,
 };
 
+const registrationSuccessful = {
+	head: `		<title>Document</title>
+		<link rel="stylesheet" href="./common/footer/footer.css" />
+		<link
+			rel="stylesheet"
+			href="./common/mobile-navbar/mobile-navbar.css"
+		/>
+
+		<link rel="stylesheet" href="./registration/registration.css" />`,
+
+	body: `		<navbar style="background-color: white">
+			<img src="../resources/leftarrow.svg" id="navbar-back" />
+		</navbar>
+		<img id="randomPhoto" src="./resources/registrationSuccessful.svg" />
+		<button id="form-next-button">Add more</button>
+${footer}`,
+};
+
 const set_tap_to_scan = async () => {
 	document.head.innerHTML = tap_to_scan.head;
 	document.body.innerHTML = tap_to_scan.body;
@@ -186,7 +204,18 @@ const create_member = async () => {
 		},
 	});
 
-	set_tap_to_scan();
+	set_registration_successful();
+};
+
+const set_registration_successful = async () => {
+	document.body.innerHTML = registrationSuccessful.body;
+	document.head.innerHTML = registrationSuccessful.head;
+
+	document.getElementById("navbar-back").addEventListener("click", () => {
+		set_tap_to_scan();
+	});
+
+	document.getElementById("form-next-button").onclick = set_tap_to_scan;
 };
 
 const set_add_member = async (serialNumber) => {
@@ -194,6 +223,10 @@ const set_add_member = async (serialNumber) => {
 	document.head.innerHTML = add_member.head;
 
 	document.getElementById("serialNumber").value = serialNumber;
+
+	document.getElementById("navbar-back").addEventListener("click", () => {
+		set_tap_to_scan();
+	});
 
 	const response = await fetch(
 		`${mongo_url}/attendee/serialNumber/${serialNumber}`
