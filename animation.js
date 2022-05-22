@@ -114,7 +114,7 @@ const add_member = {
   `,
 };
 
-const set_tap_to_scan = () => {
+const set_tap_to_scan = async () => {
 	document.head.innerHTML = tap_to_scan.head;
 	document.body.innerHTML = tap_to_scan.body;
 
@@ -172,4 +172,5 @@ const set_add_member = (serialNumber) => {
 
 	document.getElementById("serialNumber").value = serialNumber;
 };
+
 set_tap_to_scan();
