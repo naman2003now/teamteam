@@ -123,7 +123,7 @@ const registrationSuccessful = {
 		<link rel="stylesheet" href="./registration/registration.css" />`,
 
 	body: `		<navbar style="background-color: white">
-			<img src="../resources/leftarrow.svg" id="navbar-back" />
+			<img src="./resources/leftarrow.svg" id="navbar-back" />
 		</navbar>
 		<img id="randomPhoto" src="./resources/registrationSuccessful.svg" />
 		<button id="form-next-button">Add more</button>
@@ -141,7 +141,7 @@ const nfcNotSupported = {
 		<link rel="stylesheet" href="./registration/registration.css" />`,
 
 	body: `		<navbar style="background-color: white">
-			<img src="../resources/leftarrow.svg" id="navbar-back" />
+			<img src="./resources/leftarrow.svg" id="navbar-back" />
 		</navbar>
 		<img id="randomPhoto" src="./resources/nfcNotSupported.svg" />
 ${footer}`,
